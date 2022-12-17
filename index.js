@@ -12,8 +12,8 @@ app.use(cors())
 app.use(express.json());
 app.use(express.static('public'));
 
-const MONGODB_URL = process.env.MONGODB_URL;
-mongoose.connect(`${MONGODB_URL}`)
+const MONGODB_KEY = process.env.MONGODB_KEY;
+mongoose.connect(`mongodb+srv://brownbug:${MONGODB_KEY}@cluster0.ct7fzh1.mongodb.net/shokumo`)
     .then((data) => {
         console.log("database connected")
     })
