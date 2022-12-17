@@ -27,7 +27,7 @@ function registration(req, res) {
                         })
                         .catch((err) => {
                             console.log(err)
-                            res.send({ success: false, message: "please try again later2",error:err})
+                            res.send({ success: false, message: "please try again later"})
                         })
                 }
                 else {

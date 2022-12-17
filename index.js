@@ -12,7 +12,8 @@ app.use(cors())
 app.use(express.json());
 app.use(express.static('public'));
 
-mongoose.connect(process.env.MONGODB_URL)
+const MONGODB_URL = process.env.MONGODB_URL;
+mongoose.connect(`${MONGODB_URL}`)
     .then((data) => {
         console.log("database connected")
     })
