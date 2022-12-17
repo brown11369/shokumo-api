@@ -1,20 +1,24 @@
 const express=require("express");
 const mongoose=require("mongoose")
 const cors=require("cors")
-const stripe = require("stripe")("sk_test_51MF0AcSHgVbyLoUair4iosF2wfR6P9AKUHZl3TA5uXU8VqA6Cgs2osoVAKgVf9pm5BhIM9hAe0aMYXuQ9UDZOVW500nl2zBIgO");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
+
+
 
 const app=express();
 app.use(cors())
 app.use(express.json());
 app.use(express.static('public')); 
 
-mongoose.connect("mongodb://localhost:27017/shokumo")
+mongoose.connect(process.env.MONGODB_URL)
 .then((data)=>{
     console.log("database connected")
 })
 .catch((err)=>{
     console.log(err)
 })
+
+
 
 
 const orderModel=require("./model/orderModel")
@@ -56,8 +60,8 @@ app.post('/create-checkout-session', async (req, res) => {
 
         const session = await stripe.checkout.sessions.create({
             mode: 'payment',
-            success_url: `http://127.0.0.1:5173/order?success=true`,
-            cancel_url: `http://127.0.0.1:5173/order?canceled=true`,
+            success_url: `${process.env.STRIPE_URL}/order?success=true`,
+            cancel_url: `${process.env.STRIPE_URL}/order?canceled=true`,
             line_items: lineitems,
             shipping_address_collection: {allowed_countries: ['US', 'IN']},
             payment_method_types: ["card"],
@@ -81,6 +85,6 @@ app.post('/create-checkout-session', async (req, res) => {
 
 
 
-app.listen(3000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log("i am working perfectly fine")
 })
