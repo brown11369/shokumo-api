@@ -3,10 +3,11 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 require('dotenv').config()
 
+const app = express();
 
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 
-const app = express();
+
 app.use(cors())
 app.use(express.json());
 app.use(express.static('public'));
